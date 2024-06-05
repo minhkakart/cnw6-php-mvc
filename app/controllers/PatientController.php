@@ -3,11 +3,12 @@ require_once APP_ROOT . 'app/controllers/Controller.php';
 require_once APP_ROOT . 'app/services/PatientService.php';
 class PatientController extends Controller
 {
+    private const HOME_PAGE = DOMAIN . '?controller=patient';
     public function index()
     {
         $patientService = new PatientService();
         $patients = $patientService->getAllPatients();
-        $this->view('home/index', ['patients' => $patients]);
+        $this->view('patient/index', ['patients' => $patients]);
     }
 
     public function create()
@@ -23,9 +24,9 @@ class PatientController extends Controller
         $modifiedPatient = new Patient(null, $name, $gender);
         
         $patientService = new PatientService();
-        $success = $patientService->store($modifiedPatient);
+        $success = $patientService->store($modifiedPatient); 
         if ($success){
-            $this->redirect(DOMAIN);
+            $this->redirect(PatientController::HOME_PAGE);
         } else{
             $this->view('error/notfound');
         }
@@ -72,7 +73,7 @@ class PatientController extends Controller
         $patientService = new PatientService();
         $success = $patientService->update($modifiedPatient);
         if ($success){
-            $this->redirect(DOMAIN);
+            $this->redirect(PatientController::HOME_PAGE);
         } else{
             $this->view('error/notfound');
         }
@@ -88,7 +89,7 @@ class PatientController extends Controller
         $id = $_GET['id'];
         $success = $patientService->delete($id);
         if ($success){
-            $this->redirect(DOMAIN);
+            $this->redirect(PatientController::HOME_PAGE);
         } else{
             $this->view('error/notfound');
         }

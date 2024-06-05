@@ -5,8 +5,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $patientService = new PatientService();
-        $patients = $patientService->getAllPatients();
-        $this->view('home/index', ['patients' => $patients]);
+        $this->view('home/index');
     }
 }
